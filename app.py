@@ -7,10 +7,12 @@ app = Flask(__name__)
 # Set your OpenAI API key
 openai.api_key = os.getenv("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")  # Use environment variable
 
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["GET", "POST"])
 def chat():
+    if request.method == "GET":
+        return jsonify({"message": "Send a POST request with a message to get a response."})
+        
     user_message = request.json.get("message", "")
-
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
